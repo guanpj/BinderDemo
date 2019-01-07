@@ -21,14 +21,14 @@ public class MyService extends Service {
         @Override
         public void addUser(User user) {
             Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
-                    + "，线程：" + Thread.currentThread().getName() + "————" + "执行 addUser");
+                    + "，线程：" + Thread.currentThread().getName() + "————" + "Server 执行 addUser");
             users.add(user);
         }
 
         @Override
         public List<User> getUserList() {
             Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
-                    + "，线程：" + Thread.currentThread().getName() + "————" + "执行 getUserList");
+                    + "，线程：" + Thread.currentThread().getName() + "————" + "Server 执行 getUserList");
             return users;
         }
     }
@@ -38,7 +38,7 @@ public class MyService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
-                + "，线程：" + Thread.currentThread().getName() + "————" + "返回 Stub");
+                + "，线程：" + Thread.currentThread().getName() + "————" + "Server onBind");
         return mStub;
     }
 }

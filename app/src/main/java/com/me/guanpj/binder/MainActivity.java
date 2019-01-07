@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
-                    + "，线程：" + Thread.currentThread().getName() + "————" +"服务已绑定");
+                    + "，线程：" + Thread.currentThread().getName() + "————" + "Client onServiceConnected");
             mMyStub = UserManagerImpl.asInterface(service);
         }
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_add_user:
                 if (null != mMyStub) {
                     try {
-                        Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" +"开始调用add");
+                        Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" +"Client 调用 addUser");
                         mMyStub.addUser(new User(111, "gpj"));
                     } catch (RemoteException e) {
                         e.printStackTrace();
@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_get_size:
                 if (null != mMyStub) {
                     try {
+                        Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" +"Client 调用 getUserList");
                         List<User> userList = mMyStub.getUserList();
                         tvResult.setText("getUserList size:" + userList.size());
                         Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" +"调用结果：" + userList.size());

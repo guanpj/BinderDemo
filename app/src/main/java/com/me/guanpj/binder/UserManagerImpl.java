@@ -43,7 +43,7 @@ public abstract class UserManagerImpl extends Binder implements IUserManager {
                 return true;
             }
             case TRANSACTION_addUser: {
-                Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "本地对象执行 addUser");
+                Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "本地对象通过 Binder 执行 addUser");
                 data.enforceInterface(DESCRIPTOR);
                 User arg0;
                 if ((0 != data.readInt())) {
@@ -56,7 +56,7 @@ public abstract class UserManagerImpl extends Binder implements IUserManager {
                 return true;
             }
             case TRANSACTION_getUserList: {
-                Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "本地对象执行 getUserList");
+                Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "本地对象通过 Binder 执行 getUserList");
                 data.enforceInterface(DESCRIPTOR);
                 List<User> result = this.getUserList();
                 reply.writeNoException();
@@ -97,7 +97,7 @@ public abstract class UserManagerImpl extends Binder implements IUserManager {
                } else {
                    _data.writeInt(0);
                }
-                Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "代理对象调用 addUser");
+                Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "代理对象通过 Binder 调用 addUser");
                 mRemote.transact(UserManagerImpl.TRANSACTION_addUser, _data, _reply, 0);
                 _reply.readException();
             } finally {
@@ -113,7 +113,7 @@ public abstract class UserManagerImpl extends Binder implements IUserManager {
             List<User> _result;
             try {
                 _data.writeInterfaceToken(DESCRIPTOR);
-                Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "代理对象调用 getUserList");
+                Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "代理对象通过 Binder 调用 getUserList");
                 mRemote.transact(UserManagerImpl.TRANSACTION_getUserList, _data, _reply, 0);
                 _reply.readException();
                 _result = _reply.createTypedArrayList(User.CREATOR);

@@ -19,18 +19,16 @@ public class MyService extends Service {
         List<User> users = new ArrayList<>();
 
         @Override
-        public int add(int a, int b) throws RemoteException {
-            Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "MyServer执行add");
-            return 2 * a + 2 * b;
-        }
-
-        @Override
         public void addUser(User user) {
+            Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
+                    + "，线程：" + Thread.currentThread().getName() + "————" + "执行 addUser");
             users.add(user);
         }
 
         @Override
         public List<User> getUserList() {
+            Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
+                    + "，线程：" + Thread.currentThread().getName() + "————" + "执行 getUserList");
             return users;
         }
     }
@@ -39,7 +37,8 @@ public class MyService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "返回Stub");
+        Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
+                + "，线程：" + Thread.currentThread().getName() + "————" + "返回 Stub");
         return mStub;
     }
 }

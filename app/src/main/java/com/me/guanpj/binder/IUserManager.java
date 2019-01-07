@@ -8,16 +8,15 @@ package com.me.guanpj.binder;
 import java.util.List;
 
 public interface IUserManager extends android.os.IInterface {
-    static final java.lang.String DESCRIPTOR = "com.longrise.jie.myapplication.IUserManager";
+    //唯一性标识
+    static final java.lang.String DESCRIPTOR = "com.me.guanpj.binder.IUserManager";
 
-    int TRANSACTION_add = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
-    int TRANSACTION_addUser = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
-    int TRANSACTION_getUserList = (android.os.IBinder.FIRST_CALL_TRANSACTION + 2);
+    //方法标识，用十六进制表示
+    int TRANSACTION_addUser = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
+    int TRANSACTION_getUserList = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
 
-    int add(int a, int b) throws android.os.RemoteException;
-
+    //Server 具有的能力
     void addUser(User user) throws android.os.RemoteException;
-
     List<User> getUserList() throws android.os.RemoteException;
 }
 

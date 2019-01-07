@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ServiceConnection mConn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" +"服务已绑定");
+            Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
+                    + "，线程：" + Thread.currentThread().getName() + "————" +"服务已绑定");
             mMyStub = UserManagerImpl.asInterface(service);
         }
 
@@ -64,10 +65,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btn_bind:
                 Intent intent = new Intent();
-                intent.setAction("com.longrise.jie.myapplication");
+                intent.setAction("com.me.guanpj.binder");
                 intent.setComponent(new ComponentName("com.me.guanpj.binder", "com.me.guanpj.binder.MyService"));
 
-                Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "开始绑定服务");
+                Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
+                        + "，线程：" + Thread.currentThread().getName() + "————" + "开始绑定服务");
                 bindService(intent, mConn, Context.BIND_AUTO_CREATE);
                 break;
             case R.id.btn_add_user:
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (null != mMyStub) {
                     try {
                         List<User> userList = mMyStub.getUserList();
-                        tvResult.setText("getUserList 结果:" + userList.size());
+                        tvResult.setText("getUserList size:" + userList.size());
                         Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" +"调用结果：" + userList.size());
                     } catch (RemoteException e) {
                         e.printStackTrace();

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class MyService extends Service {
 
-    class MyStub extends UserManagerImpl {
+    class UserManagerNative extends UserManagerImpl {
 
         List<User> users = new ArrayList<>();
 
@@ -32,12 +32,12 @@ public class MyService extends Service {
         }
     }
 
-    private MyStub mStub = new MyStub();
+    private UserManagerNative mUserManagerNative = new UserManagerNative();
 
     @Override
     public IBinder onBind(Intent intent) {
         Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
                 + "，线程：" + Thread.currentThread().getName() + "————" + "Server onBind");
-        return mStub;
+        return mUserManagerNative;
     }
 }

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnAddUser;
     Button btnGetSize;
     TextView tvResult;
-    IUserManager mMyStub;
+    IUserManager mUserManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +51,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
                     + "，线程：" + Thread.currentThread().getName() + "————" + "Client onServiceConnected");
-            mMyStub = UserManagerImpl.asInterface(service);
+            mUserManager = UserManagerImpl.asInterface(service);
+            try {
+                //注册远程服务死亡通知
+                service.linkToDeath(mDeathRecipient, 0);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            mUserManager = null;
+        }
+    };
 
+    private IBinder.DeathRecipient mDeathRecipient = new IBinder.DeathRecipient() {
+        @Override
+        public void binderDied() {
+            if (mUserManager != null) {
+                mUserManager.asBinder().unlinkToDeath(mDeathRecipient, 0);
+                mUserManager = null;
+                //重新绑定服务
+                bindService();
+            }
         }
     };
 
@@ -64,19 +82,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_bind:
-                Intent intent = new Intent();
-                intent.setAction("com.me.guanpj.binder");
-                intent.setComponent(new ComponentName("com.me.guanpj.binder", "com.me.guanpj.binder.MyService"));
-
-                Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
-                        + "，线程：" + Thread.currentThread().getName() + "————" + "开始绑定服务");
-                bindService(intent, mConn, Context.BIND_AUTO_CREATE);
+                bindService();
                 break;
             case R.id.btn_add_user:
-                if (null != mMyStub) {
+                if (null != mUserManager) {
                     try {
                         Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" +"Client 调用 addUser");
-                        mMyStub.addUser(new User(111, "gpj"));
+                        mUserManager.addUser(new User(111, "gpj"));
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -85,10 +97,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btn_get_size:
-                if (null != mMyStub) {
+                if (null != mUserManager) {
                     try {
                         Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" +"Client 调用 getUserList");
-                        List<User> userList = mMyStub.getUserList();
+                        List<User> userList = mUserManager.getUserList();
                         tvResult.setText("getUserList size:" + userList.size());
                         Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" +"调用结果：" + userList.size());
                     } catch (RemoteException e) {
@@ -100,5 +112,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             default:
         }
+    }
+
+    private void bindService() {
+        Intent intent = new Intent();
+        intent.setAction("com.me.guanpj.binder");
+        intent.setComponent(new ComponentName("com.me.guanpj.binder", "com.me.guanpj.binder.MyService"));
+
+        Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
+                + "，线程：" + Thread.currentThread().getName() + "————" + "开始绑定服务");
+        bindService(intent, mConn, Context.BIND_AUTO_CREATE);
     }
 }

@@ -14,7 +14,7 @@ public abstract class UserManagerImpl extends Binder implements IUserManager {
     }
 
     /**
-     * 将 IBinder 对象转换成 Binder 本地对象或者代理对象
+     * 根据 Binder 本地对象或者代理对象返回 IUserManager 接口
      */
     public static IUserManager asInterface(android.os.IBinder obj) {
         if ((obj == null)) {
@@ -47,10 +47,12 @@ public abstract class UserManagerImpl extends Binder implements IUserManager {
                 data.enforceInterface(DESCRIPTOR);
                 User arg0;
                 if ((0 != data.readInt())) {
+                    //取出客户端传递过来的数据
                     arg0 = User.CREATOR.createFromParcel(data);
                 } else {
                     arg0 = null;
                 }
+                //调用 Binder 本地对象
                 this.addUser(arg0);
                 reply.writeNoException();
                 return true;
@@ -58,8 +60,10 @@ public abstract class UserManagerImpl extends Binder implements IUserManager {
             case TRANSACTION_getUserList: {
                 Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "本地对象通过 Binder 执行 getUserList");
                 data.enforceInterface(DESCRIPTOR);
+                //调用 Binder 本地对象
                 List<User> result = this.getUserList();
                 reply.writeNoException();
+                //将结果返回给客户端
                 reply.writeTypedList(result);
                 return true;
             }
@@ -93,12 +97,14 @@ public abstract class UserManagerImpl extends Binder implements IUserManager {
                 _data.writeInterfaceToken(DESCRIPTOR);
                if (user != null) {
                    _data.writeInt(1);
+                   //将 user 对象的值写入 _data
                    user.writeToParcel(_data, 0);
                } else {
                    _data.writeInt(0);
                }
-                Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "代理对象通过 Binder 调用 addUser");
-                mRemote.transact(UserManagerImpl.TRANSACTION_addUser, _data, _reply, 0);
+               Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "代理对象通过 Binder 调用 addUser");
+               //通过 transact 跟 Server 交互
+               mRemote.transact(UserManagerImpl.TRANSACTION_addUser, _data, _reply, 0);
                 _reply.readException();
             } finally {
                 _reply.recycle();
@@ -114,8 +120,10 @@ public abstract class UserManagerImpl extends Binder implements IUserManager {
             try {
                 _data.writeInterfaceToken(DESCRIPTOR);
                 Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————" + "代理对象通过 Binder 调用 getUserList");
+                //通过 transact 跟 Server 交互
                 mRemote.transact(UserManagerImpl.TRANSACTION_getUserList, _data, _reply, 0);
                 _reply.readException();
+                //获取 Server 的返回值并进程转换
                 _result = _reply.createTypedArrayList(User.CREATOR);
             } finally {
                 _reply.recycle();

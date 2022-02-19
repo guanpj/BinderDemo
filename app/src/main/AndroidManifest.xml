@@ -19,18 +19,18 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".MyService">
+        <!--<service android:name=".MyService">
             <intent-filter>
                 <action android:name="com.me.guanpj.binder" />
             </intent-filter>
-        </service>
+        </service>-->
 
-        <!--<service android:name=".MyService"
+        <service android:name=".MyService"
             android:process=":remote">
             <intent-filter>
                 <action android:name="com.me.guanpj.binder"/>
             </intent-filter>
-        </service>-->
+        </service>
     </application>
 
 </manifest>

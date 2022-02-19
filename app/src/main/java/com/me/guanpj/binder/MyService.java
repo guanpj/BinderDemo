@@ -13,31 +13,31 @@ import java.util.List;
  */
 public class MyService extends Service {
 
-    class UserManagerNative extends UserManagerImpl {
+    class MyServiceNative extends IMyServiceImpl {
 
         List<User> users = new ArrayList<>();
 
         @Override
         public void addUser(User user) {
-            Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
-                    + "，线程：" + Thread.currentThread().getName() + "————" + "Server 执行 addUser");
+            Log.e("gpj", "进程：" + Utils.getProcessName()
+                    + "，线程：" + Thread.currentThread().getName() + "————Server 执行 addUser");
             users.add(user);
         }
 
         @Override
         public List<User> getUserList() {
-            Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
-                    + "，线程：" + Thread.currentThread().getName() + "————" + "Server 执行 getUserList");
+            Log.e("gpj", "进程：" + Utils.getProcessName()
+                    + "，线程：" + Thread.currentThread().getName() + "————Server 执行 getUserList");
             return users;
         }
     }
 
-    private UserManagerNative mUserManagerNative = new UserManagerNative();
+    private MyServiceNative mUserManagerNative = new MyServiceNative();
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.e("gpj", "进程：" + Utils.getProcessName(getApplicationContext())
-                + "，线程：" + Thread.currentThread().getName() + "————" + "Server onBind");
+        Log.e("gpj", "进程：" + Utils.getProcessName()
+                + "，线程：" + Thread.currentThread().getName() + "————Server onBind");
         return mUserManagerNative;
     }
 }

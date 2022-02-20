@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ClientActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +25,7 @@
             </intent-filter>
         </service>-->
 
-        <service android:name=".MyService"
+        <service android:name=".UserServer"
             android:process=":remote">
             <intent-filter>
                 <action android:name="com.me.guanpj.binder"/>

@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class ClientActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btnBind;
     Button btnAddUser;
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, "先绑定 Service 才能调用方法", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ClientActivity.this, "先绑定 Service 才能调用方法", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.btn_get_size:
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, "先绑定 Service 才能调用方法", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ClientActivity.this, "先绑定 Service 才能调用方法", Toast.LENGTH_LONG).show();
                 }
                 break;
             default:

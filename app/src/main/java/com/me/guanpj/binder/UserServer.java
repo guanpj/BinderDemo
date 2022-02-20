@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Jie on 2016-7-26.
  */
-public class MyService extends Service {
+public class UserServer extends Service {
 
     class MyServiceNative extends IMyServiceImpl {
 

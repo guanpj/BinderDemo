@@ -51,7 +51,7 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.e("gpj", "进程：" + Utils.getProcessName()
                     + "，线程：" + Thread.currentThread().getName() + "————Client onServiceConnected");
-            myService = IMyServiceImpl.asInterface(service);
+            myService = Stub.asInterface(service);
         }
 
         @Override
@@ -102,7 +102,7 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
     private void bindService() {
         Intent intent = new Intent();
         intent.setAction("com.me.guanpj.binder");
-        intent.setComponent(new ComponentName("com.me.guanpj.binder", "com.me.guanpj.binder.MyService"));
+        intent.setComponent(new ComponentName("com.me.guanpj.binder", "com.me.guanpj.binder.UserServer"));
 
         Log.e("gpj", "进程：" + Utils.getProcessName()
                 + "，线程：" + Thread.currentThread().getName() + "————开始绑定 Servcie");

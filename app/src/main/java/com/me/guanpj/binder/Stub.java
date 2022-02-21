@@ -5,16 +5,16 @@ import android.util.Log;
 
 import java.util.List;
 
-public abstract class IMyServiceImpl extends Binder implements IMyService {
+public abstract class Stub extends Binder implements IMyService {
     /**
      * Construct the mLocalStub at attach it to the interface.
      */
-    public IMyServiceImpl() {
+    public Stub() {
         this.attachInterface(this, DESCRIPTOR);
     }
 
     /**
-     * 根据 Binder 本地对象或者代理对象返回 IUserManager 接口
+     * 根据 Binder 本地对象或者代理对象返回 IMyService 接口
      */
     public static IMyService asInterface(android.os.IBinder obj) {
         if ((obj == null)) {
@@ -27,7 +27,7 @@ public abstract class IMyServiceImpl extends Binder implements IMyService {
             return ((IMyService) iin);
         }
         Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————返回代理对象");
-        return new IMyServiceImpl.Proxy(obj);
+        return new Stub.Proxy(obj);
     }
 
     @Override
@@ -105,7 +105,7 @@ public abstract class IMyServiceImpl extends Binder implements IMyService {
                 }
                 Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————代理对象通过 Binder 调用 addUser");
                 //通过 transact 跟 Server 交互
-                mRemote.transact(IMyServiceImpl.TRANSACTION_addUser, _data, _reply, 0);
+                mRemote.transact(Stub.TRANSACTION_addUser, _data, _reply, 0);
                 _reply.readException();
             } finally {
                 _reply.recycle();
@@ -122,7 +122,7 @@ public abstract class IMyServiceImpl extends Binder implements IMyService {
                 _data.writeInterfaceToken(DESCRIPTOR);
                 Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————代理对象通过 Binder 调用 getUserList");
                 //通过 transact 跟 Server 交互
-                mRemote.transact(IMyServiceImpl.TRANSACTION_getUserList, _data, _reply, 0);
+                mRemote.transact(Stub.TRANSACTION_getUserList, _data, _reply, 0);
                 _reply.readException();
                 //获取 Server 的返回值并进程转换
                 _result = _reply.createTypedArrayList(User.CREATOR);

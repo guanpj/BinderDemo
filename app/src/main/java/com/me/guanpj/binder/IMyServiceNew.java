@@ -8,7 +8,7 @@ package com.me.guanpj.binder;
 import java.util.List;
 
 
-public interface IMyService extends android.os.IInterface {
+public interface IMyServiceNew extends android.os.IInterface {
     //唯一性标识
     static final java.lang.String DESCRIPTOR = "com.me.guanpj.binder.IMyService";
 

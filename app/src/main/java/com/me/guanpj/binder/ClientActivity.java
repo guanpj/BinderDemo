@@ -22,7 +22,7 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
     Button btnAddUser;
     Button btnGetSize;
     TextView tvResult;
-    IMyService myService;
+    IMyServiceNew myService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

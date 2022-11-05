@@ -39,12 +39,12 @@ public class UserServer extends Service {
         }
     }
 
-    private MyServiceNative mUserManagerNative = new MyServiceNative();
+    private MyServiceNative mMyServiceNative = new MyServiceNative();
 
     @Override
     public IBinder onBind(Intent intent) {
         Log.e("gpj", "进程：" + Utils.getProcessName()
                 + "，线程：" + Thread.currentThread().getName() + "————Server onBind");
-        return mUserManagerNative;
+        return mMyServiceNative;
     }
 }

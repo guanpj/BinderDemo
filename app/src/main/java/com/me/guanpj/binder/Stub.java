@@ -5,7 +5,7 @@ import android.util.Log;
 
 import java.util.List;
 
-public abstract class Stub extends Binder implements IMyService {
+public abstract class Stub extends Binder implements IMyServiceNew {
     /**
      * Construct the mLocalStub at attach it to the interface.
      */
@@ -16,15 +16,15 @@ public abstract class Stub extends Binder implements IMyService {
     /**
      * 根据 Binder 本地对象或者代理对象返回 IMyService 接口
      */
-    public static IMyService asInterface(android.os.IBinder obj) {
+    public static IMyServiceNew asInterface(android.os.IBinder obj) {
         if ((obj == null)) {
             return null;
         }
         //查找本地对象
         android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
-        if (((iin != null) && (iin instanceof IMyService))) {
+        if (((iin != null) && (iin instanceof IMyServiceNew))) {
             Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————返回本地对象");
-            return ((IMyService) iin);
+            return ((IMyServiceNew) iin);
         }
         Log.e("gpj", "线程：" + Thread.currentThread().getName() + "————返回代理对象");
         return new Stub.Proxy(obj);
@@ -74,7 +74,7 @@ public abstract class Stub extends Binder implements IMyService {
     }
 
 
-    private static class Proxy implements IMyService {
+    private static class Proxy implements IMyServiceNew {
         private android.os.IBinder mRemote;
 
         Proxy(android.os.IBinder remote) {
